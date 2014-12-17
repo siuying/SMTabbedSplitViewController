@@ -13,6 +13,7 @@
 @interface SMMasterViewController : UIViewController
 
 @property (nonatomic, strong) UIViewController *viewController;
+@property (nonatomic, strong) UIColor *borderColor;
 
 - (id)initWithFrame:(CGRect)frame;
 

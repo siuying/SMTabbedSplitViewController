@@ -10,13 +10,16 @@
 
 #import "SMDetailViewController.h"
 
+@interface SMDetailViewController()
+@property (nonatomic, strong) UIView* borderView;
+@end
+
 @implementation SMDetailViewController
 
 #pragma mark -
 #pragma mark - Initialization
 
 - (id)init {
-    
     return [self initWithFrame:CGRectMake(70 + 320 + 1, 0, self.view.bounds.size.width - 1, self.view.bounds.size.height)];
 }
 
@@ -25,10 +28,15 @@
     self = [super init];
     
     if (self) {
-        
         self.view.frame = frame;
         self.view.clipsToBounds = YES;
         self.view.backgroundColor = [UIColor clearColor];
+        self.borderColor = [UIColor lightGrayColor];
+
+        self.borderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, CGRectGetHeight(self.view.bounds))];
+        self.borderView.backgroundColor = self.borderColor;
+        self.borderView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        [self.view addSubview:self.borderView];
     }
     
     return self;
@@ -40,19 +48,23 @@
 - (void)setViewController:(UIViewController *)viewController {
     
     if (viewController) {
-        
         UIViewController *oldVC = _viewController;
-        
         _viewController = viewController;
-        _viewController.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+        _viewController.view.frame = CGRectMake(0, 0, self.view.bounds.size.width - 0, CGRectGetHeight(self.view.bounds));
         _viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
         [self addChildViewController:_viewController];
         [self.view addSubview:_viewController.view];
-        
+        [self.view sendSubviewToBack:_viewController.view];
+
         [oldVC.view removeFromSuperview];
         [oldVC removeFromParentViewController];
     }
+}
+
+- (void) setBorderColor:(UIColor *)borderColor
+{
+    _borderColor = borderColor;
+    self.borderView.backgroundColor = borderColor;
 }
 
 #pragma mark -

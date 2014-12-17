@@ -10,6 +10,10 @@
 
 #import "SMMasterViewController.h"
 
+@interface SMMasterViewController()
+@property (nonatomic, strong) UIView* borderView;
+@end
+
 @implementation SMMasterViewController
 
 #pragma mark -
@@ -29,6 +33,13 @@
         self.view.frame = frame;
         self.view.clipsToBounds = YES;
         self.view.backgroundColor = [UIColor clearColor];
+        
+        self.borderColor = [UIColor lightGrayColor];        
+        self.borderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, CGRectGetHeight(self.view.bounds))];
+        self.borderView.backgroundColor = self.borderColor;
+        self.borderView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        [self.view addSubview:self.borderView];
+
     }
     
     return self;
@@ -53,10 +64,17 @@
         
         [self addChildViewController:_viewController];
         [self.view addSubview:_viewController.view];
-        
+        [self.view sendSubviewToBack:_viewController.view];
+
         [oldVC.view removeFromSuperview];
         [oldVC removeFromParentViewController];
     }
+}
+
+- (void) setBorderColor:(UIColor *)borderColor
+{
+    _borderColor = borderColor;
+    self.borderView.backgroundColor = borderColor;
 }
 
 #pragma mark -

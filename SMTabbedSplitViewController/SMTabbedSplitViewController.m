@@ -117,8 +117,8 @@
     BOOL isPortrait = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
     CGFloat tabbarWidth = [self tabBarWidth];
     CGFloat masterWidth = _masterIsHidden ? 0 : (isPortrait ? 310 : 320);
-    return CGRectMake(tabbarWidth + masterWidth + 1, 0,
-                      self.view.bounds.size.width - masterWidth - tabbarWidth - 1, self.view.bounds.size.height);
+    return CGRectMake(tabbarWidth + masterWidth, 0,
+                      self.view.bounds.size.width - masterWidth - tabbarWidth, self.view.bounds.size.height);
 }
 
 #pragma mark -
