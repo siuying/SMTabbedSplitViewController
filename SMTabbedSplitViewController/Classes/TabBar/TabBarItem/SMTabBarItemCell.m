@@ -15,6 +15,7 @@
     UIView *_topSeparator;
     UIView *_separator;
     UIView *_viewBackground;
+    BOOL _isInitializing;
 }
 @end
 
@@ -27,14 +28,14 @@
     [[self appearance] setIconHeight:54.0];
     [[self appearance] setIconWidth:54.0];
     [[self appearance] setTitleHeight:12.0];
+    [[self appearance] setSeparatorColor:[UIColor clearColor]];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    
+    _isInitializing = YES;
     if (self) {
-        
         self.backgroundColor = [UIColor clearColor];
         
         _width = 70.0;
@@ -55,7 +56,9 @@
         [self addSubview:_titleLabel];
         
         _selectedColor = [UIColor colorWithWhite:0.85f alpha:1.0f];
+        _separatorColor = [UIColor clearColor];
     }
+    _isInitializing = NO;
     return self;
 }
 
@@ -78,6 +81,14 @@
     _image = image;
 }
 
+- (void)setSeparatorColor:(UIColor *)separatorColor
+{
+    _separatorColor = [UIColor clearColor];
+    if (!_isInitializing) {
+        _separatorColor = separatorColor;
+    }
+}
+
 - (void)setIsFirstCell:(BOOL)isFirstCell {
     
     _isFirstCell = isFirstCell;
@@ -85,7 +96,7 @@
     if (isFirstCell) {
         
         _topSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 1)];
-        _topSeparator.backgroundColor = [UIColor blackColor];
+        _topSeparator.backgroundColor = self.separatorColor;
         [self addSubview:_topSeparator];
     }
 }
@@ -97,7 +108,7 @@
     if (_cellType == SMTabBarItemCellTab) {
         
         _separator = [[UIView alloc] init];
-        _separator.backgroundColor = [UIColor blackColor];
+        _separator.backgroundColor = self.separatorColor;
         [self addSubview:_separator];
     }
 }
