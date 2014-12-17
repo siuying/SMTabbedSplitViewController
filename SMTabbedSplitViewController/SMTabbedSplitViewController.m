@@ -175,14 +175,7 @@
 #pragma mark - Actions
 
 - (void)hideMaster {
-    
-    CATransition *transitionMaster = [CATransition animation];
-    transitionMaster.type = kCATransitionPush;
-    transitionMaster.subtype = kCATransitionFromRight;
-    [_masterVC.view.layer addAnimation:transitionMaster forKey:@"hideOrAppear"];
-    
     [UIView animateWithDuration:0.2 animations:^{
-        
         _masterIsHidden = YES;
         CGFloat tabBarWidth = 70 * (_splitType == SMTabbedSplt);
         _detailVC.view.frame = CGRectMake(tabBarWidth, 0, self.view.bounds.size.width - tabBarWidth, self.view.bounds.size.height);
@@ -195,12 +188,6 @@
     _masterIsHidden = NO;
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
-
-    CATransition *transitionMaster = [CATransition animation];
-    transitionMaster.type = kCATransitionPush;
-    transitionMaster.subtype = kCATransitionFromLeft;
-    transitionMaster.duration = 0.2;
-    [_masterVC.view.layer addAnimation:transitionMaster forKey:@"hideOrAppear"];
 }
 
 #pragma mark -
