@@ -34,7 +34,7 @@
         self.view.clipsToBounds = YES;
         self.view.backgroundColor = [UIColor clearColor];
         
-        self.borderColor = [UIColor lightGrayColor];        
+        self.borderColor = [UIColor clearColor];        
         self.borderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, CGRectGetHeight(self.view.bounds))];
         self.borderView.backgroundColor = self.borderColor;
         self.borderView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
