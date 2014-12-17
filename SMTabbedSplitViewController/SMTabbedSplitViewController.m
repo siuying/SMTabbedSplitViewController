@@ -73,7 +73,6 @@
     self.view.backgroundColor = [UIColor clearColor];
     
     if (_splitType == SMTabbedSplt) {
-        
         [self.view addSubview:_tabBar.view];
     }
     
@@ -86,16 +85,12 @@
     _masterVC.view.layer.shadowOpacity = 1.5f;
     _masterVC.view.layer.shadowRadius = 2.5f;
     _masterVC.view.layer.shadowPath = shadowPath.CGPath;
-    
     [self.view addSubview:_detailVC.view];
 }
 
 - (void)viewWillLayoutSubviews {
     
     [super viewWillLayoutSubviews];
-    
-    if (_masterIsHidden)
-        return;
 
     _detailVC.view.frame = [self detailVCFrame];
     _masterVC.view.frame = [self masterVCFrame];
@@ -111,14 +106,11 @@
 }
 
 - (CGRect)masterVCFrame {
-    if (_masterIsHidden) {
-        return CGRectMake([self tabBarWidth], 0, 0, self.view.bounds.size.height);
-    }
-
     BOOL isPortrait = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
     CGFloat widthDif = isPortrait ? 10 : 0;
+    CGFloat width = 320 - widthDif;
     return CGRectMake([self tabBarWidth], 0,
-                      320 - widthDif, self.view.bounds.size.height);
+                      width, self.view.bounds.size.height);
 }
 
 - (CGRect)detailVCFrame {
