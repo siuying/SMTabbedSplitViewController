@@ -193,8 +193,9 @@
 - (void)showMaster {
     
     _masterIsHidden = NO;
+    [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
-    
+
     CATransition *transitionMaster = [CATransition animation];
     transitionMaster.type = kCATransitionPush;
     transitionMaster.subtype = kCATransitionFromLeft;
