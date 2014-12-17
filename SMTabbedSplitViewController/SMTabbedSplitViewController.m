@@ -153,11 +153,10 @@
     _detailVC.viewController = _viewControllers[1];
 }
 
-- (void)setBackground:(UIColor *)background {
-    
-    _tabBar.view.backgroundColor = background;
-    _masterVC.view.backgroundColor = background;
-    _detailVC.view.backgroundColor = background;
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    _tabBar.view.backgroundColor = backgroundColor;
+    _masterVC.view.backgroundColor = backgroundColor;
+    _detailVC.view.backgroundColor = backgroundColor;
 }
 
 - (void)setTabsViewControllers:(NSArray *)tabsViewControllers {

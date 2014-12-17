@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, SMSplitType) {
 @interface SMTabbedSplitViewController : UIViewController
 
 @property (nonatomic, readonly, strong) SMTabBar *tabBar;
-@property (nonatomic, weak) UIColor *background;
+@property (nonatomic, weak) UIColor *backgroundColor;
 @property (nonatomic, strong) NSArray *tabsViewControllers;
 @property (nonatomic, strong) NSArray *actionsButtons;
 @property (nonatomic, strong) NSArray *viewControllers;

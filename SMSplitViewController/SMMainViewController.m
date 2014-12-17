@@ -114,7 +114,7 @@
     split.tabsViewControllers = @[tab1, tab2, tab3, tab4, tab5, tab6];
     split.actionsButtons = @[action, action2];
     
-    split.background = [UIColor whiteColor];
+    split.backgroundColor = [UIColor whiteColor];
     
     [self.navigationController pushViewController:split animated:YES];
 }
