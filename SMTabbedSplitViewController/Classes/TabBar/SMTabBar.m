@@ -13,10 +13,6 @@
 #import "SMTabBarItemCell.h"
 
 #define iOS_7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-static const NSInteger tabBarWidth = 70;
-static const NSInteger tabItemHeight = 60;
-#define tabsButtonsFrame CGRectMake(0, 10 + iOS_7 * 20, tabBarWidth, _tabsButtonsHeight)
-#define actionButtonFrame CGRectMake(0, self.view.frame.size.height - _actionsButtonsHeight + iOS_7 * 20 - tabItemHeight / 2 * iOS_7 - 10 * !iOS_7, tabBarWidth, _actionsButtonsHeight)
 
 @interface SMTabBar () <UITableViewDelegate, UITableViewDataSource>
 {
@@ -34,6 +30,28 @@ static const NSInteger tabItemHeight = 60;
 
 #pragma mark -
 #pragma mark - Initialization
+
+-(CGFloat) tabBarWidth
+{
+    return [[SMTabBarItemCell appearance] width];
+}
+
+-(CGFloat) tabBarItemHeight
+{
+    return [[SMTabBarItemCell appearance] height];
+}
+
+-(CGRect) tabsButtonsFrame
+{
+    return CGRectMake(0, 10 + iOS_7 * 20,
+                      [self tabBarWidth], _tabsButtonsHeight);
+}
+
+-(CGRect) actionButtonFrame
+{
+    return CGRectMake(0, self.view.frame.size.height - _actionsButtonsHeight + iOS_7 * 20 - [self tabBarItemHeight] / 2 * iOS_7 - 10 * !iOS_7,
+                      [self tabBarWidth], _actionsButtonsHeight);
+}
 
 - (id)init {
     
@@ -57,14 +75,14 @@ static const NSInteger tabItemHeight = 60;
             
             if ([obj isKindOfClass:[SMTabBarItem class]]) {
                 
-                _tabsButtonsHeight += tabItemHeight;
+                _tabsButtonsHeight += [self tabBarItemHeight];
                 [tmpItems addObject:obj];
             }
         }];
         
         _tabsButtons = [NSArray arrayWithArray:tmpItems];
         
-        _tabsTable = [[UITableView alloc] initWithFrame:tabsButtonsFrame style:UITableViewStylePlain];
+        _tabsTable = [[UITableView alloc] initWithFrame:[self tabsButtonsFrame] style:UITableViewStylePlain];
         _tabsTable.scrollEnabled = NO;
         _tabsTable.dataSource = self;
         _tabsTable.delegate = self;
@@ -95,14 +113,14 @@ static const NSInteger tabItemHeight = 60;
             
             if ([obj isKindOfClass:[SMTabBarItem class]]) {
                 
-                _actionsButtonsHeight += tabItemHeight;
+                _actionsButtonsHeight += [self tabBarItemHeight];
                 [tmpItems addObject:obj];
             }
         }];
         
         _actionsButtons = [NSArray arrayWithArray:tmpItems];
         
-        _actionsTable = [[UITableView alloc] initWithFrame:actionButtonFrame style:UITableViewStylePlain];
+        _actionsTable = [[UITableView alloc] initWithFrame:[self actionButtonFrame] style:UITableViewStylePlain];
         _actionsTable.scrollEnabled = NO;
         _actionsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
         _actionsTable.delegate = self;
@@ -122,16 +140,16 @@ static const NSInteger tabItemHeight = 60;
     
     [super viewWillLayoutSubviews];
     
-    self.view.frame = CGRectMake(0, 0, tabBarWidth, self.view.bounds.size.height);
+    self.view.frame = CGRectMake(0, 0, [self tabBarWidth], self.view.bounds.size.height);
     
     if (_tabsTable) {
         
-        _tabsTable.frame = tabsButtonsFrame;
+        _tabsTable.frame = [self tabsButtonsFrame];
     }
     
     if (_actionsTable) {
         
-        _actionsTable.frame = actionButtonFrame;
+        _actionsTable.frame = [self actionButtonFrame];
     }
     
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
@@ -180,7 +198,7 @@ static const NSInteger tabItemHeight = 60;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return tabItemHeight;
+    return [self tabBarItemHeight];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

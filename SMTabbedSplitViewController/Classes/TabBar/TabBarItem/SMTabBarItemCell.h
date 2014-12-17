@@ -18,6 +18,12 @@ typedef  NS_ENUM(NSUInteger, SMTabBarItemCellType) {
 
 @interface SMTabBarItemCell : UITableViewCell
 
+@property (nonatomic, assign) CGFloat width UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat height UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat iconWidth UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat iconHeight UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat titleHeight UI_APPEARANCE_SELECTOR;
+
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, weak) UIViewController *viewController;

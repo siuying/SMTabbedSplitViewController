@@ -20,6 +20,15 @@
 
 @implementation SMTabBarItemCell
 
++(void) load
+{
+    [[self appearance] setWidth:70.0];
+    [[self appearance] setHeight:60.0];
+    [[self appearance] setIconHeight:54.0];
+    [[self appearance] setIconWidth:54.0];
+    [[self appearance] setTitleHeight:12.0];
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -27,6 +36,12 @@
     if (self) {
         
         self.backgroundColor = [UIColor clearColor];
+        
+        _width = 70.0;
+        _height = 60.0;
+        _iconHeight = 54.0;
+        _iconWidth = 54.0;
+        _titleHeight = 20;
         
         _iconView = [[UIImageView alloc] init];
         _iconView.contentMode = UIViewContentModeCenter;
@@ -47,9 +62,9 @@
 - (void)layoutSubviews {
     
     [super layoutSubviews];
-    
-    _iconView.frame = CGRectMake(self.bounds.size.width / 2 - 54 / 2, - 6, 54, 54);
-    _titleLabel.frame = CGRectMake(0, self.bounds.size.height - 20, self.bounds.size.width, 12);
+
+    _iconView.frame     = CGRectMake(self.bounds.size.width / 2 - _iconHeight / 2, -6, _iconWidth, _iconHeight);
+    _titleLabel.frame   = CGRectMake(0, self.bounds.size.height - _titleHeight - 8, self.bounds.size.width, _titleHeight);
     
     if (_separator)
         _separator.frame = CGRectMake(0, self.bounds.size.height - 1, self.bounds.size.width, 1);

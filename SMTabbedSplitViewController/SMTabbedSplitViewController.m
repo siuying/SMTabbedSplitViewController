@@ -14,6 +14,7 @@
 #import "SMMasterViewController.h"
 #import "SMDetailViewController.h"
 #import "SMTabBar.h"
+#import "SMTabBarItemCell.h"
 
 @interface SMTabbedSplitViewController () <SMTabBarDelegate>
 {
@@ -95,36 +96,37 @@
     
     if (_masterIsHidden)
         return;
-    
-    BOOL tabBarIsShowed = (_splitType == SMTabbedSplt);
-    CGRect appFrame = [UIScreen mainScreen].applicationFrame;
-    
-    BOOL isPortrait = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
-    BOOL iOSVersionLowerThan8 = [[[UIDevice currentDevice] systemVersion] floatValue] < 8.0;
-    
-    CGRect detailFrame = [self detailVCFrame];
-    CGFloat widthDif = isPortrait ? 10 : 0;
-    detailFrame.origin.x -= widthDif;
-    detailFrame.size.width = isPortrait ? appFrame.size.width - (70 * tabBarIsShowed) - 310 - 1 : (iOSVersionLowerThan8 ? appFrame.size.height : appFrame.size.width)- (70 * tabBarIsShowed) - 320 - 1;
-    _detailVC.view.frame = detailFrame;
-    
-    CGRect masterFrame = [self masterVCFrame];
-    masterFrame.size.width -= widthDif;
-    _masterVC.view.frame = masterFrame;
+
+    _detailVC.view.frame = [self detailVCFrame];
+    _masterVC.view.frame = [self masterVCFrame];
 }
 
 
 #pragma mark -
 #pragma mark - Frames
 
+-(CGFloat) tabBarWidth
+{
+    return (_splitType == SMTabbedSplt) ? [[SMTabBarItemCell appearance] width] : 0.0;
+}
+
 - (CGRect)masterVCFrame {
-    
-    return (_splitType == SMTabbedSplt) ? CGRectMake(70, 0, 320, self.view.bounds.size.height) : CGRectMake(0, 0, 320, self.view.bounds.size.height);
+    if (_masterIsHidden) {
+        return CGRectMake([self tabBarWidth], 0, 0, self.view.bounds.size.height);
+    }
+
+    BOOL isPortrait = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
+    CGFloat widthDif = isPortrait ? 10 : 0;
+    return CGRectMake([self tabBarWidth], 0,
+                      320 - widthDif, self.view.bounds.size.height);
 }
 
 - (CGRect)detailVCFrame {
-    
-    return (_splitType == SMTabbedSplt) ? CGRectMake(70 + 320 + 1, 0, self.view.bounds.size.width - 1, self.view.bounds.size.height) : CGRectMake(320 + 1, 0, self.view.bounds.size.width - 1, self.view.bounds.size.height);
+    BOOL isPortrait = UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
+    CGFloat tabbarWidth = [self tabBarWidth];
+    CGFloat masterWidth = _masterIsHidden ? 0 : (isPortrait ? 310 : 320);
+    return CGRectMake(tabbarWidth + masterWidth + 1, 0,
+                      self.view.bounds.size.width - masterWidth - tabbarWidth - 1, self.view.bounds.size.height);
 }
 
 #pragma mark -
@@ -175,26 +177,25 @@
 #pragma mark - Actions
 
 - (void)hideMaster {
+    _masterIsHidden = YES;
     [UIView animateWithDuration:0.2 animations:^{
-        _masterIsHidden = YES;
-        CGFloat tabBarWidth = 70 * (_splitType == SMTabbedSplt);
-        _detailVC.view.frame = CGRectMake(tabBarWidth, 0, self.view.bounds.size.width - tabBarWidth, self.view.bounds.size.height);
+        [self.view setNeedsLayout];
         [self.view layoutIfNeeded];
     }];
 }
 
 - (void)showMaster {
-    
     _masterIsHidden = NO;
-    [self.view setNeedsLayout];
-    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.view setNeedsLayout];
+        [self.view layoutIfNeeded];
+    }];
 }
 
 #pragma mark -
 #pragma mark - Autorotation
 
 - (BOOL)shouldAutorotate {
-    
     return YES;
 }
 
