@@ -31,7 +31,7 @@
         self.view.frame = frame;
         self.view.clipsToBounds = YES;
         self.view.backgroundColor = [UIColor clearColor];
-        self.borderColor = [UIColor lightGrayColor];
+        self.borderColor = [UIColor colorWithWhite:0.0 alpha:0.2];
 
         self.borderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, CGRectGetHeight(self.view.bounds))];
         self.borderView.backgroundColor = self.borderColor;
