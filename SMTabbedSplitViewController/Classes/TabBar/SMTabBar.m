@@ -43,8 +43,7 @@
 
 -(CGRect) tabsButtonsFrame
 {
-    return CGRectMake(0, 10 + iOS_7 * 20,
-                      [self tabBarWidth], _tabsButtonsHeight);
+    return CGRectMake(0, self.topMargin + iOS_7 * 20, [self tabBarWidth], _tabsButtonsHeight);
 }
 
 -(CGRect) actionButtonFrame
@@ -58,7 +57,7 @@
     self = [super init];
     
     if (self) {
-        
+        self.topMargin = 10.0;
         self.view.clipsToBounds = YES;
     }
     
@@ -186,6 +185,12 @@
 -(void)setActionsButtons:(NSArray *)actionsButtons {
  
     [self actionsInit:actionsButtons];
+}
+
+-(void) setTopMargin:(CGFloat)topMargin
+{
+    _topMargin = topMargin;
+    [self.view setNeedsLayout];
 }
 
 #pragma mark -

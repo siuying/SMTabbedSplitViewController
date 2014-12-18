@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSArray *actionsButtons;
 @property (weak, nonatomic) id<SMTabBarDelegate> delegate;
 @property (nonatomic) NSUInteger selectedTabIndex;
+@property (nonatomic, assign) CGFloat topMargin;
 
 @end
 
