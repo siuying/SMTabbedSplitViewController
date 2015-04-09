@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, SMSplitType) {
 @property (nonatomic, readonly, weak) UIViewController *masterViewController;
 @property (nonatomic, weak) UIViewController *detailViewController;
 @property (nonatomic) SMSplitType splitType;
+@property (nonatomic, readonly, assign) BOOL masterIsHidden;
 
 - (id)initTabbedSplit;
 - (id)initSplit;
